@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::whereNull('parent_id')->get();
+        $categories = Category::select('id', 'name', 'parent_id')->get();
 
         return response()->json([
             'success' => true,

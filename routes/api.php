@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Customer\CustomerController;
@@ -19,11 +20,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::prefix('customer')->name('customer.')->group(function () {
+    Route::post('register', [CustomerController::class, 'register'])->name('register');
     Route::post('login', [CustomerController::class, 'login'])->name('login');
 
     Route::middleware(['auth:sanctum', 'customer'])->group(function () {
         Route::post('logout', [CustomerController::class, 'logout'])->name('logout');
         Route::get('profile', [CustomerController::class, 'profile'])->name('profile');
+        Route::apiResource('orders', OrderController::class);
     });
 });
 
